@@ -1,13 +1,14 @@
 
 $(document).on('click', '#addTask', function(){
-  var task = $(this).siblings('input').val();
-  $(this).siblings('input').val('');
+  var task = $(this).parent().parent().siblings('div').children('div').children('input').val();
+  $(this).parent().parent().siblings('div').children('div').children('input').val('');
   var taskHTML = taskBuilder(task);
-  $('.output').append(taskHTML);
+  $('.card-columns').append(taskHTML);
 })
 
 $(document).on('submit', 'form', function(){
-  var isComplete = $(this).children('input:checked').val();
+  var isComplete = $(this).children('div').children('input:checked').val();
+  console.log(isComplete);
   if(isComplete == "true") {
     $(this).parent('div').css("background-color", "green");
   } else {
@@ -18,17 +19,23 @@ $(document).on('submit', 'form', function(){
 
 function taskBuilder(taskName) {
   let task = `
-  <div class="task" style="border: 1px solid black;">
-  <h2>${ taskName }</h2>
-  <form>
-    <label for="complete">Complete</label>
-    <input type="radio" name="complete" id="complete" value="true">
-    <label for="incomplete">InComplete</label>
-    <input type="radio" name="complete" id="incomplete" value="false">
-    <button>Update Task</button>
-  </form>
-</div>
-  `
+  <div class="card">
+    <div class="card-body">
+      <h2 class="card-title">${ taskName }</h2>
+      <form>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="complete" id="complete" value="true">
+          <label class="form-check-label" for="complete">Complete</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="complete" id="incomplete" value=false>
+          <label class="form-check-label" for="incomplete">Incomplete</label>
+        </div>
+        <button class="btn btn-primary">Update Task</button>
+      </form>
+    </div>
+  </div>
+  `;
   return task;
 }
 
